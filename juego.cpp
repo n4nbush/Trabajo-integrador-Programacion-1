@@ -86,8 +86,20 @@ void configurar_juego(std::string &nombre_jugador, int &duracion, float &patrimo
 }
 
 void partida(std::string &nombre_jugador, int &duracion, float &patrimonio, float inversiones[]){
+    
+    std::string meses[12] = {"ENERO", "FEBRERO","MARZO", "ABRIL", "MAYO", "JUNIO","JULIO", "AGOSTO", "SEPTIEMBRE", "OCTUBRE", "NOVIEMBRE", "DICIEMBRE"};
+
     limpiar_pantalla();
-    std::cout << "hola" << nombre_jugador <<std::endl;
+    
+    for(int i=1; i <= duracion; i++){
+        separador();
+        std::cout << "MES " << i << "/" << duracion << " - " << meses[i-1] << " Jugador: " << nombre_jugador << std::endl;
+        separador();
+
+        texto_centrado("TENENCIAS ACTUALES");
+        std::cout << "Disponible en pesos: $" << patrimonio << std::endl;
+        std::cout << "Fondo de emergencia: $" << inversiones[1];
+    }
+
     std::cin.ignore();
-    std::cin.get();
 }

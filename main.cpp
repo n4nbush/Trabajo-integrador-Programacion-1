@@ -1,15 +1,24 @@
 #include <iostream>
 #include "menu.h"
 #include "juego.h"
+#include "rlutil.h"
 
 int main() {
+
+    //rlutil::setBackgroundColor(rlutil::BLACK);
+    //rlutil::setColor(rlutil::WHITE);
+    //rlutil::cls();
+
     bool juego = true;
     int opcion;
     std::string nombre_jugador;
     int duracion = 0;
-    int tamaño_inversiones = 5;
+    const int tamaño_inversiones = 3;
     float inversiones [tamaño_inversiones];
     float patrimonio = 150000;
+    float gastos_fijos[4] = {
+        
+    };
 
     while(juego){
 
@@ -34,11 +43,6 @@ int main() {
         }
 
     }
-
-
-
-
-
 
     return 0;
 }

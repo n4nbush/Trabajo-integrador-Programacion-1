@@ -1,5 +1,6 @@
 #include <iostream>
 #include "menu.h" // Vinculamos con su cabecera
+#include "rlutil.h"
 
 void separador(){
     int ancho = 50;
@@ -36,7 +37,7 @@ int menu() {
     }
 
 void limpiar_pantalla(){
-    std::cout << "\033[2J\033[H";
+    rlutil::cls();
 }
 
 bool salir_programa(){
@@ -57,16 +58,14 @@ bool salir_programa(){
                 limpiar_pantalla();
                 std::cout << "Cerrando programa" << std::endl;
                 std::cout << "Presione Enter para continuar...";
-                std::cin.ignore();
-                std::cin.get();
+                rlutil::anykey();
                 valor = false;
                 break;
             case 2:
                 limpiar_pantalla();
                 std::cout << "Volviendo a menu principal" << std::endl;
                 std::cout << "Presione Enter para continuar...";
-                std::cin.ignore();
-                std::cin.get();
+                rlutil::anykey();
                 valor = true;
                 break;
         }
