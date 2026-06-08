@@ -39,7 +39,8 @@ void limpiar_pantalla(){
     std::cout << "\033[2J\033[H";
 }
 
-int salir_programa(){
+bool salir_programa(){
+    bool valor;
     limpiar_pantalla();
     int opcion = -1;
     while(opcion<1 || opcion>2){
@@ -58,7 +59,7 @@ int salir_programa(){
                 std::cout << "Presione Enter para continuar...";
                 std::cin.ignore();
                 std::cin.get();
-                return(false);
+                valor = false;
                 break;
             case 2:
                 limpiar_pantalla();
@@ -66,9 +67,12 @@ int salir_programa(){
                 std::cout << "Presione Enter para continuar...";
                 std::cin.ignore();
                 std::cin.get();
-                return(true);
+                valor = true;
+                break;
         }
     }
+    return (valor); 
 }
+
 
 

@@ -2,43 +2,92 @@
 #include "juego.h"
 #include "menu.h"
 
-void iniciar_nuevo_juego(){
+void configurar_juego(std::string &nombre_jugador, int &duracion, float &patrimonio, float inversiones[]){
 
+    
+    int respuesta = 2;
+    bool datos_validos = false;
 
-    std::string nombre;
-    int duracion = 0;
-    int patrimonio = 150000;
+    while(!datos_validos){
 
-    limpiar_pantalla();
-    separador();
-    texto_centrado("CONFIGURANDO PARTIDA");
-    separador();
-    std::cout << "Ingrese su nombre: ";
-    std::cin >> nombre;
+        // ENTRADA DE NOMBRE
 
-    while(duracion<1 || duracion>12){
         limpiar_pantalla();
-
         separador();
         texto_centrado("CONFIGURANDO PARTIDA");
         separador();
-        std::cout << "Bienvenido " << nombre << std::endl;
-        std::cout << "Cuantos meses va a durar la partida: ";
-        std::cin >> duracion;
+        std::cout << "Ingrese su nombre: ";
+        std::cin >> nombre_jugador;
+        limpiar_pantalla();
+        
+        // ENTRADA DE DURACION 
+        while (duracion<1 || duracion>12){
+            separador();
+            texto_centrado("CONFIGURANDO PARTIDA");
+            separador();
+            std::cout << "Bienvenido " << nombre_jugador << std::endl;
+            std::cout << "Cuantos meses va a durar la partida: ";
+            std::cin >> duracion;
 
-        if (duracion<1 || duracion>12){
-            std::cout << "Duracion invalida. Debe ser un valor entre 1 y 12 meses";
-            std::cout << "Presione Enter para continuar...";
+
+            // VALIDAMOS DURACION
+            if (duracion<1 || duracion>12){
+                std::cout << "Duracion invalida. Debe ser un valor entre 1 y 12 meses";
+                std::cout << "Presione Enter para continuar...";
+                std::cin.ignore();
+                std::cin.get();
+                continue;
+            }
+        }
+        
+        // ENTREGA DE DATOS
+        limpiar_pantalla();
+        separador();
+        texto_centrado("DETALLES DE LA PARTIDA");
+        separador();
+        std::cout << "Nombre del jugador: " << nombre_jugador << std::endl;
+        std::cout << "Duracion: " << duracion << " meses" << std::endl;
+        std::cout << "Patrimonia inicial: " << "$" << patrimonio << std::endl;
+        std::cout << "Inversiones: " << "$" << inversiones << std::endl;
+        std::cout << std::endl;
+        
+        // SOLICITAMOS CONFIRMACION AL USUARIO
+        std::cout << "Los datos son correctos?" << std::endl;
+        std::cout << "1. Si" << std::endl;
+        std::cout << "2. No" << std::endl;
+        std::cout <<"Ingrese una opcion: ";
+        std::cin >> respuesta;
+        
+        switch (respuesta)
+        {
+        case 1:
+            limpiar_pantalla();
+            std::cout << "Iniciando juego..." << std::endl;
+            std::cout << "Preciones una tecla para iniciar el juego" << std::endl;
             std::cin.ignore();
             std::cin.get();
+            datos_validos = true;
+            break;
+        case 2:
+            limpiar_pantalla();
+            std::cout << "Regresando a los ajustes..." << std::endl;
+            std::cin.ignore();
+            std::cin.get();
+            duracion = 0;
+            break;
+        default:
+            limpiar_pantalla();
+            std::cout << "Ingrese una respuesta correcta";
+            std::cin.ignore();
+            std::cin.get();
+            break;
         }
     }
+}
 
-
+void partida(std::string &nombre_jugador, int &duracion, float &patrimonio, float inversiones[]){
     limpiar_pantalla();
-    std::cout << "Detalles de partida: " << std::endl;
-    std::cout << "Nombre del jugador: " << nombre << std::endl;
-    std::cout << "Duracion: " << duracion << " meses" << std::endl;
+    std::cout << "hola" << nombre_jugador <<std::endl;
     std::cin.ignore();
-
+    std::cin.get();
 }

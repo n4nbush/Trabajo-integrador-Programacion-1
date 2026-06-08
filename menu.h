@@ -4,7 +4,7 @@
 // Solo declaramos la función
 int menu();
 void limpiar_pantalla();
-int salir_programa();
+bool salir_programa();
 void separador();
 void texto_centrado(std::string);
 
