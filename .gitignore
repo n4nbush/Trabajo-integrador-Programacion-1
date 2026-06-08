@@ -1,0 +1,13 @@
+# Archivos de configuración de Code::Blocks
+*.depend
+*.layout
+
+# Objetos y binarios compilados
+*.o
+*.obj
+bin/
+obj/
+
+# Ejecutables finales
+*.exe
+*.out
