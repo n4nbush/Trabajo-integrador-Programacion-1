@@ -132,14 +132,23 @@ void glosario(){
             texto_centrado("¿QUÉ DESEÁS HACER AHORA?");
             separador();
             std::cout << "[1] Volver al Glosario (Buscar otro término)" << std::endl;
-            std::cout << "[2] Salir al Menú Principal" << std::endl;
+            std::cout << "[2] Salir del Glosario" << std::endl;
             separador();
 
             int op = -1;
 
             std::cin >> op;
 
-            salir_programa();
+            if (op == 1){
+                continue;
+            }
+            else if(op == 2){
+                ejecutar_glosario = false;
+            }
+            else{
+                std::cout << "Ingrese una opcion correcta" << std::endl;
+            }
+
         }
     }
 }
