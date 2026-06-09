@@ -1,6 +1,7 @@
 #include <iostream>
-#include "menu.h" // Vinculamos con su cabecera
+#include "menu.h"
 #include "rlutil.h"
+#include "constantes.h"
 
 void separador(){
     int ancho = 50;
@@ -25,10 +26,10 @@ int menu() {
     separador();
     texto_centrado("SOBREVIVIR EL AÑO");
     separador();
-    std::cout <<"1. Nueva Partida                   	 "<<std::endl;
-    std::cout <<"2. Highscore de la sesión          	 "<<std::endl;
-    std::cout <<"3. Glosario Financiero             	 "<<std::endl;
-    std::cout <<"0. Salir                           	 "<<std::endl;
+    std::cout <<"1. Nueva Partida"<<std::endl;
+    std::cout <<"2. Highscore de la sesión"<<std::endl;
+    std::cout <<"3. Glosario Financiero"<<std::endl;
+    std::cout <<"0. Salir "<<std::endl;
     separador();
     std::cout <<"Ingrese una opcion: ";
     std::cin >> opmenu;
@@ -71,6 +72,43 @@ bool salir_programa(){
         }
     }
     return (valor); 
+}
+
+void glosario(){
+    
+    
+    int opcion = -1;
+    while (opcion<1 || opcion>12){
+        limpiar_pantalla();
+        separador();
+        texto_centrado("GLOSARIO FINANCIERO");
+        separador();
+
+        for (int i = 1; i <= CANTIDAD_TITULOS_GLOSARIO; i++){
+            std::cout << i << " - " << GLOSARIO_TITULOS[i-1] << std::endl;
+        }
+
+        std::cout << "Ingrese una opcion para saber mas sobre la misma: ";
+        std::cin >> opcion;
+
+        if (opcion<1 || opcion>12){
+            limpiar_pantalla();
+            std::cout <<"Ingrese un numero que corresponda a algun titulo" << std::endl;
+            std::cout << "Precione cualquier tecla para continuar...";
+            std::cin.ignore();
+            std::cin.get();
+            continue;
+        }
+
+        limpiar_pantalla();
+
+        separador();
+        std::cout << GLOSARIO_TITULOS[opcion] << std::endl ;
+        separador();
+
+        std::cin.ignore();
+        std::cin.get();
+    }
 }
 
 

@@ -7,5 +7,6 @@ void limpiar_pantalla();
 bool salir_programa();
 void separador();
 void texto_centrado(std::string);
+void glosario();
 
 #endif

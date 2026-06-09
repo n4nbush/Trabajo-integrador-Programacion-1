@@ -35,7 +35,7 @@ int main() {
                 std::cout << "Opcion 2" << std::endl;
                 break;
             case 3:
-                std::cout << "Opcion 3" << std::endl;
+                glosario();
                 break;
             case 0:
                 juego = salir_programa();
