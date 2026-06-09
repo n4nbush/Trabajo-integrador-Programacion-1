@@ -71,45 +71,79 @@ bool salir_programa(){
                 break;
         }
     }
-    return (valor); 
+    return (valor);
 }
+
+void texto_largo(std::string text) {
+    int i = 0;
+    if (text.length()>50){
+        for (char x : text){
+            std::cout << x;
+            i++;
+
+            if (i==49){
+                std::cout << "\n";
+                i = 0;
+            }
+        }
+    }
+    std::cout << std::endl;
+}
+
+
 
 void glosario(){
-    
-    
-    int opcion = -1;
-    while (opcion<1 || opcion>12){
-        limpiar_pantalla();
-        separador();
-        texto_centrado("GLOSARIO FINANCIERO");
-        separador();
-
-        for (int i = 1; i <= CANTIDAD_TITULOS_GLOSARIO; i++){
-            std::cout << i << " - " << GLOSARIO_TITULOS[i-1] << std::endl;
-        }
-
-        std::cout << "Ingrese una opcion para saber mas sobre la misma: ";
-        std::cin >> opcion;
-
-        if (opcion<1 || opcion>12){
+    bool ejecutar_glosario = true;
+    while(ejecutar_glosario){
+        int opcion = -1;
+        while (opcion<1 || opcion>12){
             limpiar_pantalla();
-            std::cout <<"Ingrese un numero que corresponda a algun titulo" << std::endl;
-            std::cout << "Precione cualquier tecla para continuar...";
-            std::cin.ignore();
-            std::cin.get();
-            continue;
+            separador();
+            texto_centrado("GLOSARIO FINANCIERO");
+            separador();
+
+            for (int i = 1; i <= CANTIDAD_TITULOS_GLOSARIO; i++){
+                std::cout << i << " - " << GLOSARIO_TITULOS[i-1] << std::endl;
+            }
+
+            std::cout << "Ingrese una opcion para saber mas sobre la misma: ";
+            std::cin >> opcion;
+
+            if (opcion<1 || opcion>12){
+                limpiar_pantalla();
+                std::cout <<"Ingrese un numero que corresponda a algun titulo" << std::endl;
+                std::cout << "Precione cualquier tecla para continuar...";
+                std::cin.ignore();
+                std::cin.get();
+                continue;
+            }
+
+            limpiar_pantalla();
+
+            separador();
+            std::cout << GLOSARIO_TITULOS[opcion-1] << std::endl ;
+            separador();
+            texto_centrado("Descripcion");
+            separador();
+
+            texto_largo(GLOSARIO_DEFINICIONES[1]);
+
+            separador();
+            texto_centrado("¿QUÉ DESEÁS HACER AHORA?");
+            separador();
+            std::cout << "[1] Volver al Glosario (Buscar otro término)" << std::endl;
+            std::cout << "[2] Salir al Menú Principal" << std::endl;
+            separador();
+
+            int op = -1;
+
+            std::cin >> op;
+
+            salir_programa();
         }
-
-        limpiar_pantalla();
-
-        separador();
-        std::cout << GLOSARIO_TITULOS[opcion] << std::endl ;
-        separador();
-
-        std::cin.ignore();
-        std::cin.get();
     }
 }
+
 
 
 

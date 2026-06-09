@@ -17,7 +17,7 @@ int main() {
     float inversiones [tamaño_inversiones];
     float patrimonio = 150000;
     float gastos_fijos[4] = {
-        
+
     };
 
     while(juego){
