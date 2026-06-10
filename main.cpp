@@ -2,6 +2,7 @@
 #include "menu.h"
 #include "juego.h"
 #include "rlutil.h"
+#include "constantes.h"
 
 int main() {
 

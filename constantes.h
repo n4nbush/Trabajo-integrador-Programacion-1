@@ -3,20 +3,6 @@
 
 #include <string>
 
-// ========== VALORES INICIALES DEL JUEGO ==========
-
-const float PATRIMONIO_INICIA = 150000.00;
-const int CANTIDAD_INVERSIONES = 4;
-const int CANTIDAD_GASTOS = 4;
-
-// ========== Gastos fijos ==========
-
-const float GASTOS_INICIALES[CANTIDAD_GASTOS] = {
-    180000,  // Alquiler
-    45000,   // Servicios
-    30000,   // Transporte
-    80000    // Alimentación
-};
 
 // =============== Glosario Financiero ===========
 

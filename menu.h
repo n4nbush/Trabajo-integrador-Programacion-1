@@ -8,5 +8,6 @@ bool salir_programa();
 void separador();
 void texto_centrado(std::string);
 void glosario();
+void enmarcar_texto(std::string);
 
 #endif

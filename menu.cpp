@@ -1,12 +1,15 @@
 #include <iostream>
+#include <string>
 #include "menu.h"
 #include "rlutil.h"
 #include "constantes.h"
 
 void separador(){
     int ancho = 50;
-    std::string separador(ancho, '=');
-    std::cout << separador << std::endl;
+    for (int i =  0; i < ancho; i++){
+        std::cout << "─";
+    }
+    std::cout << std::endl;
 }
 
 void texto_centrado(std::string texto){
@@ -18,14 +21,54 @@ void texto_centrado(std::string texto){
     std::string margen(espacio,' ');
     std::cout << margen << texto << std::endl;
 }
+
+
+void dibujar_linea(std::string caracter, int cantidad) {
+    for (int i = 0; i < cantidad; i++) {
+        std::cout << caracter;
+    }
+}
+
+void enmarcar_texto(std::string texto){
+    int ancho = 50;
+
+    if (texto.length() > (ancho - 2)) {
+        texto = texto.substr(0, ancho - 5) + "...";
+    }
+    int espacio_disponible = (ancho -2)- texto.length();
+    int margen_izquierdo = espacio_disponible / 2;
+    int margen_derecho = espacio_disponible - margen_izquierdo ;
+
+    std::cout << "╔";
+    dibujar_linea("═", ancho - 2); // <- Con comillas dobles
+    std::cout << "╗" << std::endl;
+
+    if (texto.length() >= ancho){
+                std::cout << texto << std::endl;
+    }else{
+            std::cout << "║";
+            dibujar_linea(" ", margen_izquierdo);
+            std::cout << texto ;
+            dibujar_linea(" ", margen_derecho);
+
+            std::cout << "║" << std::endl;
+    }
+    
+    std::cout << "╚";
+    dibujar_linea("═", ancho - 2); // <- Con comillas dobles
+    std::cout << "╝" << std::endl;        
+    
+}
+
+
 int menu() {
 
     int opmenu = -1;
     limpiar_pantalla();
 
-    separador();
-    texto_centrado("SOBREVIVIR EL AÑO");
-    separador();
+    std::string texto = std::string("SOBREVIVE EL A") + char(165) + "O";    enmarcar_texto(texto);
+
+
     std::cout <<"1. Nueva Partida"<<std::endl;
     std::cout <<"2. Highscore de la sesión"<<std::endl;
     std::cout <<"3. Glosario Financiero"<<std::endl;
@@ -98,13 +141,13 @@ void glosario(){
         int opcion = -1;
         while (opcion<1 || opcion>12){
             limpiar_pantalla();
-            separador();
-            texto_centrado("GLOSARIO FINANCIERO");
-            separador();
+            enmarcar_texto("GLOSARIO FINANCIERO");
 
             for (int i = 1; i <= CANTIDAD_TITULOS_GLOSARIO; i++){
                 std::cout << i << " - " << GLOSARIO_TITULOS[i-1] << std::endl;
             }
+
+            separador();
 
             std::cout << "Ingrese una opcion para saber mas sobre la misma: ";
             std::cin >> opcion;
