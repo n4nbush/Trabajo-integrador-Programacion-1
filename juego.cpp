@@ -2,6 +2,7 @@
 #include "juego.h"
 #include "menu.h"
 #include "constantes.h"
+#include "finanzas.h"
 
 void configurar_juego(std::string &nombre_jugador, int &duracion, float &patrimonio, float inversiones[]){
 
@@ -106,18 +107,7 @@ void partida(std::string &nombre_jugador, int &duracion, float &patrimonio, floa
 
         gastosFijos = alquiler + servicios + transporte + alimentacion;
 
-        if(i == 9){
-        alquiler *= 1.4;
-        }
-
-        if(i%6==0){
-                cobrar_aguinaldo=true;
-                aguinaldo=sueldo/2;
-        }
-
-        if(cobrar_aguinaldo){
-                sobrante_de_plata+=aguinaldo;
-        }
+        eventos(duracion, sobrante_de_plata, sueldo,alquiler);
 
         std::string texto_info = "MES " + std::to_string(i) + "/" + std::to_string(duracion) + " - " + meses[i-1] + " Jugador: " + nombre_jugador;
         

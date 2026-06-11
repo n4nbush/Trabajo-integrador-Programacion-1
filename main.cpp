@@ -3,9 +3,16 @@
 #include "juego.h"
 #include "rlutil.h"
 #include "constantes.h"
+#include <clocale>
+
+
 
 int main() {
 
+    #ifdef _WIN32
+    SetConsoleOutputCP(CP_UTF8);
+    #endif
+    
     //rlutil::setBackgroundColor(rlutil::BLACK);
     //rlutil::setColor(rlutil::WHITE);
     //rlutil::cls();

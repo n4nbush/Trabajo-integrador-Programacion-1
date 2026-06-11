@@ -7,7 +7,7 @@
 void separador(){
     int ancho = 50;
     for (int i =  0; i < ancho; i++){
-        std::cout << "─";
+        std::cout << char(196);
     }
     std::cout << std::endl;
 }
