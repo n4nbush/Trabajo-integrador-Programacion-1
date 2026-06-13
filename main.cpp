@@ -1,25 +1,24 @@
 #include <iostream>
 #include "menu.h"
 #include "juego.h"
-#include "rlutil.h"
 #include "constantes.h"
-#include <clocale>
+#ifdef _WIN32
+#include <windows.h>
+#endif
 
-
+using namespace std;
 
 int main() {
-
     #ifdef _WIN32
     SetConsoleOutputCP(CP_UTF8);
     #endif
-    
-    //rlutil::setBackgroundColor(rlutil::BLACK);
-    //rlutil::setColor(rlutil::WHITE);
-    //rlutil::cls();
 
+
+
+    srand(time(0));
     bool juego = true;
     int opcion;
-    std::string nombre_jugador;
+    string nombre_jugador;
     int duracion = 0;
     const int tamaño_inversiones = 3;
     float inversiones [tamaño_inversiones];
@@ -36,11 +35,10 @@ int main() {
 
         switch(opcion){
             case 1:
-                    configurar_juego(nombre_jugador,duracion,patrimonio,inversiones);
-                    partida(nombre_jugador,duracion,patrimonio,inversiones);
+                    nuevaPartida(MESES);
                 break;
             case 2:
-                std::cout << "Opcion 2" << std::endl;
+                cout << "Opcion 2" << endl;
                 break;
             case 3:
                 glosario();

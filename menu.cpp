@@ -1,35 +1,42 @@
 #include <iostream>
 #include <string>
 #include "menu.h"
-#include "rlutil.h"
 #include "constantes.h"
+
+using namespace std;
 
 void separador(){
     int ancho = 50;
     for (int i =  0; i < ancho; i++){
-        std::cout << char(196);
+        cout << "─";
     }
-    std::cout << std::endl;
+    cout << endl;
 }
 
-void texto_centrado(std::string texto){
+/// funcion para pausar
+void pausar(){
+    //system("pause");
+    cin.ignore();
+}
+
+void texto_centrado(string texto){
     int ancho = 50;
     if (texto.length() >= ancho){
-        std::cout << texto << std::endl;
+        cout << texto << endl;
     }
     int espacio = (ancho - texto.length())/2;
-    std::string margen(espacio,' ');
-    std::cout << margen << texto << std::endl;
+    string margen(espacio,' ');
+    cout << margen << texto << endl;
 }
 
 
-void dibujar_linea(std::string caracter, int cantidad) {
+void dibujar_linea(string caracter, int cantidad) {
     for (int i = 0; i < cantidad; i++) {
-        std::cout << caracter;
+        cout << caracter;
     }
 }
 
-void enmarcar_texto(std::string texto){
+void enmarcar_texto(string texto){
     int ancho = 50;
 
     if (texto.length() > (ancho - 2)) {
@@ -39,25 +46,25 @@ void enmarcar_texto(std::string texto){
     int margen_izquierdo = espacio_disponible / 2;
     int margen_derecho = espacio_disponible - margen_izquierdo ;
 
-    std::cout << "╔";
+    cout << "╔";
     dibujar_linea("═", ancho - 2); // <- Con comillas dobles
-    std::cout << "╗" << std::endl;
+    cout << "╗" << endl;
 
     if (texto.length() >= ancho){
-                std::cout << texto << std::endl;
+                cout << texto << endl;
     }else{
-            std::cout << "║";
+            cout << "║";
             dibujar_linea(" ", margen_izquierdo);
-            std::cout << texto ;
+            cout << texto ;
             dibujar_linea(" ", margen_derecho);
 
-            std::cout << "║" << std::endl;
+            cout << "║" << endl;
     }
-    
-    std::cout << "╚";
+
+    cout << "╚";
     dibujar_linea("═", ancho - 2); // <- Con comillas dobles
-    std::cout << "╝" << std::endl;        
-    
+    cout << "╝" << endl;
+
 }
 
 
@@ -66,22 +73,24 @@ int menu() {
     int opmenu = -1;
     limpiar_pantalla();
 
-    std::string texto = std::string("SOBREVIVE EL A") + char(165) + "O";    enmarcar_texto(texto);
+    string texto = string("SOBREVIVE EL A") + char(165) + "O";    
+    enmarcar_texto(texto);
 
 
-    std::cout <<"1. Nueva Partida"<<std::endl;
-    std::cout <<"2. Highscore de la sesión"<<std::endl;
-    std::cout <<"3. Glosario Financiero"<<std::endl;
-    std::cout <<"0. Salir "<<std::endl;
+    cout <<"1. Nueva Partida"<<endl;
+    cout <<"2. Highscore de la sesión"<<endl;
+    cout <<"3. Glosario Financiero"<<endl;
+    cout <<"0. Salir "<<endl;
     separador();
-    std::cout <<"Ingrese una opcion: ";
-    std::cin >> opmenu;
+    cout <<"Ingrese una opcion: ";
+    cin >> opmenu;
 
     return (opmenu);
     }
 
 void limpiar_pantalla(){
-    rlutil::cls();
+    system("cls");
+    system("clear");
 }
 
 bool salir_programa(){
@@ -92,24 +101,24 @@ bool salir_programa(){
         separador();
         texto_centrado("DESEA SALIR DEL JUEGO?");
         separador();
-        std::cout << "1. Si" << std::endl;
-        std::cout << "2. No" << std::endl;
-        std::cout <<"Ingrese una opcion: ";
-        std::cin >> opcion;
+        cout << "1. Si" << endl;
+        cout << "2. No" << endl;
+        cout <<"Ingrese una opcion: ";
+        cin >> opcion;
 
         switch(opcion){
             case 1:
                 limpiar_pantalla();
-                std::cout << "Cerrando programa" << std::endl;
-                std::cout << "Presione Enter para continuar...";
-                rlutil::anykey();
+                cout << "Cerrando programa" << endl;
+                cout << "Presione Enter para continuar...";
+                pausar();
                 valor = false;
                 break;
             case 2:
                 limpiar_pantalla();
-                std::cout << "Volviendo a menu principal" << std::endl;
-                std::cout << "Presione Enter para continuar...";
-                rlutil::anykey();
+                cout << "Volviendo a menu principal" << endl;
+                cout << "Presione Enter para continuar...";
+                pausar();
                 valor = true;
                 break;
         }
@@ -117,20 +126,20 @@ bool salir_programa(){
     return (valor);
 }
 
-void texto_largo(std::string text) {
+void texto_largo(string text) {
     int i = 0;
     if (text.length()>50){
         for (char x : text){
-            std::cout << x;
+            cout << x;
             i++;
 
             if (i==49){
-                std::cout << "\n";
+                cout << "\n";
                 i = 0;
             }
         }
     }
-    std::cout << std::endl;
+    cout << endl;
 }
 
 
@@ -144,27 +153,27 @@ void glosario(){
             enmarcar_texto("GLOSARIO FINANCIERO");
 
             for (int i = 1; i <= CANTIDAD_TITULOS_GLOSARIO; i++){
-                std::cout << i << " - " << GLOSARIO_TITULOS[i-1] << std::endl;
+                cout << i << " - " << GLOSARIO_TITULOS[i-1] << endl;
             }
 
             separador();
 
-            std::cout << "Ingrese una opcion para saber mas sobre la misma: ";
-            std::cin >> opcion;
+            cout << "Ingrese una opcion para saber mas sobre la misma: ";
+            cin >> opcion;
 
             if (opcion<1 || opcion>12){
                 limpiar_pantalla();
-                std::cout <<"Ingrese un numero que corresponda a algun titulo" << std::endl;
-                std::cout << "Precione cualquier tecla para continuar...";
-                std::cin.ignore();
-                std::cin.get();
+                cout <<"Ingrese un numero que corresponda a algun titulo" << endl;
+                cout << "Precione cualquier tecla para continuar...";
+                cin.ignore();
+                cin.get();
                 continue;
             }
 
             limpiar_pantalla();
 
             separador();
-            std::cout << GLOSARIO_TITULOS[opcion-1] << std::endl ;
+            cout << GLOSARIO_TITULOS[opcion-1] << endl ;
             separador();
             texto_centrado("Descripcion");
             separador();
@@ -174,13 +183,13 @@ void glosario(){
             separador();
             texto_centrado("¿QUÉ DESEÁS HACER AHORA?");
             separador();
-            std::cout << "[1] Volver al Glosario (Buscar otro término)" << std::endl;
-            std::cout << "[2] Salir del Glosario" << std::endl;
+            cout << "[1] Volver al Glosario (Buscar otro término)" << endl;
+            cout << "[2] Salir del Glosario" << endl;
             separador();
 
             int op = -1;
 
-            std::cin >> op;
+            cin >> op;
 
             if (op == 1){
                 continue;
@@ -189,7 +198,7 @@ void glosario(){
                 ejecutar_glosario = false;
             }
             else{
-                std::cout << "Ingrese una opcion correcta" << std::endl;
+                cout << "Ingrese una opcion correcta" << endl;
             }
 
         }
