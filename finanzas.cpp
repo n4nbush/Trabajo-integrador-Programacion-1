@@ -6,29 +6,22 @@
 
 using namespace std;
 
-string eventos(int mes, float &sobrante_de_plata, float &sueldo, float &alquiler){
-
-    string evento = "Sin eventos fijos";
+void eventos(int mes, float &sobrante_de_plata, float &sueldo, float &alquiler){
 
     if (mes == 1){
-        string evento ="Deposito de garantia";
+        cout << "Deposito de garantia" << endl;
         sobrante_de_plata -= 180000;
-        return (evento);
     }
 
     if (mes == 4 || mes == 7 || mes == 10){
-        string evento ="Aumento de sueldo por paritarias";
+        cout << "Aumento de sueldo por paritarias" << endl;
         sueldo *= 1.15;
-        return (evento);
     }
 
     if (mes == 9){
-        string evento = "Actualizacion del alquiler";
+        cout << "Actualizacion del alquiler" << endl;
         alquiler *= 1.4;
-        return (evento);
     }
-
-    return (evento);
 
 }
 

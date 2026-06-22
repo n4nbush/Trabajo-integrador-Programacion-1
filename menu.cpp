@@ -15,8 +15,7 @@ void separador(){
 
 /// funcion para pausar
 void pausar(){
-    //system("pause");
-    cin.ignore();
+    system("pause");
 }
 
 void texto_centrado(string texto){
@@ -73,8 +72,7 @@ int menu() {
     int opmenu = -1;
     limpiar_pantalla();
 
-    string texto = string("SOBREVIVE EL A") + char(165) + "O";    
-    enmarcar_texto(texto);
+    string texto = string("SOBREVIVE EL A") + char(165) + "O";    enmarcar_texto(texto);
 
 
     cout <<"1. Nueva Partida"<<endl;
@@ -90,7 +88,6 @@ int menu() {
 
 void limpiar_pantalla(){
     system("cls");
-    system("clear");
 }
 
 bool salir_programa(){

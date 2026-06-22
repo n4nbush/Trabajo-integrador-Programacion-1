@@ -2,6 +2,7 @@
 #include "menu.h"
 #include "juego.h"
 #include "constantes.h"
+#include "highscore.h"
 #ifdef _WIN32
 #include <windows.h>
 #endif
@@ -38,7 +39,8 @@ int main() {
                     nuevaPartida(MESES);
                 break;
             case 2:
-                cout << "Opcion 2" << endl;
+                 mostrarHighscore(); // Llama a la funcion del archivo .cpp
+
                 break;
             case 3:
                 glosario();
