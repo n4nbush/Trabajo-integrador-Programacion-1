@@ -47,6 +47,7 @@ void enmarcar_texto(string texto){
     int margen_izquierdo = espacio_disponible / 2;
     int margen_derecho = espacio_disponible - margen_izquierdo ;
 
+
     cout << "╔";
     dibujar_linea("═", ancho - 2); // <- Con comillas dobles
     cout << "╗" << endl;
@@ -98,14 +99,12 @@ int menu(){
     {
         limpiar_pantalla();
 
+        enmarcar_texto("Sobrevive al año");
         
-        rlutil::locate(30,10);
-        cout <<"Sobrevivir al año";
-        
-        showitem("Nueva Partida          ",30,12, y == 0);
-        showitem("Highscore de la sesión ",30,13, y == 1);
-        showitem("Glosario Financiero    ",30,14, y == 2);
-        showitem("Salir                  ",30,15, y == 3);
+        showitem("Nueva Partida          ",10,5, y == 0);
+        showitem("Highscore de la sesión ",10,6, y == 1);
+        showitem("Glosario Financiero    ",10,7, y == 2);
+        showitem("Salir                  ",10,8, y == 3);
 
 
         int key = rlutil::getkey();
@@ -199,8 +198,8 @@ bool salir_programa(){
         texto_centrado("DESEA SALIR DEL JUEGO?");
         separador();
 
-        showitem("SI",30,10,y == 0);
-        showitem("NO",30,11,y == 1);
+        showitem("SI",25,5,y == 0);
+        showitem("NO",25,6,y == 1);
         
         int key = rlutil::getkey();
 
@@ -290,9 +289,9 @@ void glosario(){
 
 
             for (int i = 1; i <= CANTIDAD_TITULOS_GLOSARIO-1; i++){
-               showitem(GLOSARIO_TITULOS[i],30,5+i,y == i); 
+               showitem(GLOSARIO_TITULOS[i],10,5+i,y == i); 
             }
-            showitem("SALIR DEL GLOSARIO",30,18,y==13);
+            showitem("SALIR DEL GLOSARIO",10,18,y==13);
 
             int key = rlutil::getkey();
 
