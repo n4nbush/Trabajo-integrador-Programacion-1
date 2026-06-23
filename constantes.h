@@ -72,7 +72,7 @@ const int IMPACTO_ECONOMICO_EVENTOS_ALEATOREOS[CANTIDAD_EVENTOS_ALEATOREOS]{
 
 const int CANTIDAD_TITULOS_GLOSARIO = 12;
 
-inline const char* GLOSARIO_TITULOS[CANTIDAD_TITULOS_GLOSARIO]{
+const std::string GLOSARIO_TITULOS[CANTIDAD_TITULOS_GLOSARIO]{
     "Inflación",
     "Poder adquisitivo",
     "Salario real vs. salario nominal",
@@ -87,7 +87,7 @@ inline const char* GLOSARIO_TITULOS[CANTIDAD_TITULOS_GLOSARIO]{
     "Patrimonio inicial"
 };
 
-inline const char* GLOSARIO_DEFINICIONES[CANTIDAD_TITULOS_GLOSARIO]{
+const std::string GLOSARIO_DEFINICIONES[CANTIDAD_TITULOS_GLOSARIO]{
     "Aumento generalizado y sostenido de los precios de bienes y servicios. Hace que el dinero valga menos con el tiempo.",
     "Cantidad de bienes y servicios que se pueden comprar con una suma de dinero. Disminuye cuando hay inflación.",
     "El salario nominal es el número en el recibo de sueldo. El salario real mide cuánto se puede comprar con ese dinero. Si la inflación supera al aumento del sueldo, el salario real cae.",

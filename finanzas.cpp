@@ -3,27 +3,33 @@
 #include <ctime>
 #include "constantes.h"
 #include "juego.h"
+#include "menu.h"
 
 using namespace std;
 
-void eventos(int mes, float &sobrante_de_plata, float &sueldo, float &alquiler){
+void eventos(int mes, float &sobrante_de_plata, float &sueldo, float &alquiler, string &evento, string &evento_descripcion){
 
     if (mes == 1){
-        cout << "Deposito de garantia" << endl;
+        evento ="Deposito de garantia";
+        evento_descripcion = "Se descuentan: $180000";
         sobrante_de_plata -= 180000;
     }
 
     if (mes == 4 || mes == 7 || mes == 10){
-        cout << "Aumento de sueldo por paritarias" << endl;
+        evento ="Aumento de sueldo por paritarias";
+        evento_descripcion = "Se aumenta el sueldo un 15%";
         sueldo *= 1.15;
     }
 
     if (mes == 9){
-        cout << "Actualizacion del alquiler" << endl;
+        evento = "Actualizacion del alquiler";
+        evento_descripcion = "Sube el alquiler un 40%" ;
         alquiler *= 1.4;
     }
 
+
 }
+
 
 void invocar_evento_aleatorio(int contador_eventos, float &sobrante_de_plata){
 
@@ -71,7 +77,52 @@ void eventos_aleatorios(float &sobrante_de_plata){
     }
 }
 
-void distribuir_sobrante(float sobrante_de_plata, float &fondo_emergencia, float &capital_invertir){
+void menu_inversion(float &capital_invertir, float &sobrante_de_plata, float &dolares, float &bitcoin, float &sp500){
+
+
+    int op = -1, opcion = 0;
+
+    do{
+
+        limpiar_pantalla();
+        enmarcar_texto("MENU DE INVERSION");
+        cout << "Monto a invertir: $" << capital_invertir << endl;
+        cout << "En que instrumento desea inverir:" << endl;
+        separador();
+
+        cout << "1- Pesos en cuenta" << endl;
+        cout << "2- Dolares(USD)" << endl;
+        cout << "3- Bitcoin(BTC)" << endl;
+        cout << "4- S&P 500(ETF)" << endl;
+
+        cout << "Ingrese una opcion: " ;
+        cin >> opcion;
+
+        switch(opcion){
+            case 1:
+                sobrante_de_plata += capital_invertir;
+                op = 0;
+                break;
+            case 2:
+                dolares += capital_invertir;
+                op = 0;
+                break;
+            case 3:
+                bitcoin += capital_invertir;
+                op = 0;
+                break;
+            case 4:
+                sp500 += capital_invertir;
+                op = 0;
+                break;
+        }
+            
+
+    }while(op!=0);
+
+}
+
+    void distribuir_sobrante(float sobrante_de_plata, float &fondo_emergencia, float &capital_invertir, float &dolares, float &bitcoin, float &sp500){
 
     int decision;
 
@@ -86,6 +137,8 @@ void distribuir_sobrante(float sobrante_de_plata, float &fondo_emergencia, float
         cout << "3. 75% inversion - 25% fondo de emergencia" << endl;
         cout << "4. 100% inversion - 0% fondo de emergencia" << endl;
 
+        cout << "Ingrese una opcion: ";
+
         cin >> decision;
 
         switch(decision){
@@ -93,20 +146,24 @@ void distribuir_sobrante(float sobrante_de_plata, float &fondo_emergencia, float
             case 1:
                 capital_invertir += sobrante_de_plata * 0.25;
                 fondo_emergencia += sobrante_de_plata * 0.75;
+                menu_inversion(capital_invertir, sobrante_de_plata, dolares, bitcoin, sp500);
                 break;
 
             case 2:
                 capital_invertir += sobrante_de_plata * 0.50;
                 fondo_emergencia += sobrante_de_plata * 0.50;
+                menu_inversion(capital_invertir, sobrante_de_plata, dolares, bitcoin, sp500);
                 break;
 
             case 3:
                 capital_invertir += sobrante_de_plata * 0.75;
                 fondo_emergencia += sobrante_de_plata * 0.25;
+                menu_inversion(capital_invertir, sobrante_de_plata, dolares, bitcoin, sp500);
                 break;
 
             case 4:
                 capital_invertir += sobrante_de_plata;
+                menu_inversion(capital_invertir, sobrante_de_plata, dolares, bitcoin, sp500);
                 break;
 
             default:

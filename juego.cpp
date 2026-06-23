@@ -88,14 +88,15 @@ void configurar_juego(string &nombre_jugador, int &duracion, float &patrimonio, 
 
 /// primer funcion para el punto 1
 void nuevaPartida(const string meses[]){
-    limpiar_pantalla();
     string nombreJugador;
     int rondas;
 
+    limpiar_pantalla();
 
     cout << "Ingrese su nombre completo: ";
     getline(cin, nombreJugador);
 
+    limpiar_pantalla();
     cout << "Bienvenido " << nombreJugador << endl;
 
     cout << "Cuantas rondas queres jugar (1 minimo y un maximo de 12): ";
@@ -103,13 +104,14 @@ void nuevaPartida(const string meses[]){
 
     cout << "Perfecto seleccionaste la cantidad de " << rondas << " meses" << endl;
    pausar();
+
             float alquiler = 180000;
             float servicios = 45000;
             float transporte = 30000;
             float alimentacion = 80000;
             float gastosFijos = 0;
             float sueldo=500000;
-            float sobrante_de_plata=0;
+            float sobrante_de_plata=150000;
             float dolares=0;
             float bitcoin=0;
             float sp500=0;
@@ -127,21 +129,26 @@ for(int i=1; i<=rondas; i++){
     gastosFijos = alquiler + servicios + transporte + alimentacion;
     sobrante_de_plata = sueldo - gastosFijos;
 
-    eventos(i, sobrante_de_plata, sueldo, alquiler);
 
-    if(i%6==0){
-        cobrar_aguinaldo = true;
-        aguinaldo = sueldo / 2;
-    }
+        if(i%6==0){
+            cobrar_aguinaldo = true;
+            aguinaldo = sueldo / 2;
+        }
 
-    if(cobrar_aguinaldo){
-        sobrante_de_plata += aguinaldo;
-    }
+        if(cobrar_aguinaldo){
+            sobrante_de_plata += aguinaldo;
+        }
 
-    cout << "=======================================================" << endl;
-    cout << i << "/" << rondas << " - " << meses[i-1] << "               Jugador: " << nombreJugador << endl;
+        string evento ="";
+        string evento_descripcion = "";
+
+        eventos(i, sobrante_de_plata, sueldo, alquiler, evento, evento_descripcion);
+
 
         cout << "=======================================================" << endl;
+        cout << i << "/" << rondas << " - " << meses[i-1] << "               Jugador: " << nombreJugador << endl;
+        cout << "=======================================================" << endl;
+
 
         cout << "TENDENCIAS ACTUALES: "<< endl;
         cout << "Disponible en pesos:$ "<< sobrante_de_plata << endl;
@@ -158,18 +165,32 @@ for(int i=1; i<=rondas; i++){
         }
         cout << "======================================================="<<endl;
 
-            if (i == 1){
-        cout << "Deposito de garantia" << endl;
-    }
+        //if (i == 1){cout << "Deposito de garantia" << endl;}
+        cout << "Eventos: " << endl;
+        if (evento.length() != 0 && evento_descripcion.length() != 0){
+            cout << evento << endl;
+            cout << evento_descripcion << endl << endl;
+        }
 
         eventos_aleatorios(sobrante_de_plata);
-         pausar();
+
+        string texto = "Sobrante actualizado: $" + to_string(int(sobrante_de_plata));
+
+        enmarcar_texto(texto);
+
+        cout << "Precione cualquier tecla para continuar...";
+
+
+
+        pausar();
         limpiar_pantalla();
 
-        distribuir_sobrante(sobrante_de_plata, fondo_emergencia, capital_invertir);
+        distribuir_sobrante(sobrante_de_plata, fondo_emergencia, capital_invertir,dolares,bitcoin,sp500);
+        cout << endl << endl;
+        cout << "Fondo de emergencia actual: $" << fondo_emergencia << endl;
+        cout << "Capital para invertir acumulado: $" << capital_invertir << endl;
 
-       cout << "Fondo de emergencia actual: $" << fondo_emergencia << endl;
-       cout << "Capital para invertir acumulado: $" << capital_invertir << endl;
+        cout << endl << "Precione cualquier tecla para continuar...";
 
         pausar();
         limpiar_pantalla();
