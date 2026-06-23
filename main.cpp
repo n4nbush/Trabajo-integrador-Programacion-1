@@ -3,9 +3,12 @@
 #include "juego.h"
 #include "constantes.h"
 #include "highscore.h"
+#include "rlutil.h"
+
 #ifdef _WIN32
 #include <windows.h>
 #endif
+
 
 using namespace std;
 
@@ -14,6 +17,7 @@ int main() {
     SetConsoleOutputCP(CP_UTF8);
     #endif
 
+    rlutil::setBackgroundColor(rlutil::COLOR::BLACK);
 
 
     srand(time(0));
@@ -26,6 +30,8 @@ int main() {
     float patrimonio = 150000;
     float gastos_fijos[4] = {
 
+    
+
     };
 
     while(juego){
@@ -35,17 +41,17 @@ int main() {
         opcion = menu();
 
         switch(opcion){
-            case 1:
+            case 0:
                     nuevaPartida(MESES);
                 break;
-            case 2:
+            case 1:
                  mostrarHighscore(); // Llama a la funcion del archivo .cpp
 
                 break;
-            case 3:
+            case 2:
                 glosario();
                 break;
-            case 0:
+            case 3:
                 juego = salir_programa();
                 break;
         }

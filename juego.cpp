@@ -88,10 +88,10 @@ void configurar_juego(string &nombre_jugador, int &duracion, float &patrimonio, 
 
 /// primer funcion para el punto 1
 void nuevaPartida(const string meses[]){
+    limpiar_pantalla();
     string nombreJugador;
     int rondas;
 
-    cin.ignore();
 
     cout << "Ingrese su nombre completo: ";
     getline(cin, nombreJugador);

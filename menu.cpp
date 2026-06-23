@@ -2,6 +2,7 @@
 #include <string>
 #include "menu.h"
 #include "constantes.h"
+#include "rlutil.h"
 
 using namespace std;
 
@@ -15,7 +16,8 @@ void separador(){
 
 /// funcion para pausar
 void pausar(){
-    system("pause");
+    //system("pause");
+    rlutil::anykey();
 }
 
 void texto_centrado(string texto){
@@ -66,15 +68,108 @@ void enmarcar_texto(string texto){
 
 }
 
+void showitem(const char* text, int posx, int posy, bool selected){
+    if (selected){
+        rlutil::locate(posx-3,posy);
+        rlutil::setBackgroundColor(rlutil::COLOR::BLUE);
+        cout << ">> " << text << " <<" ;
 
-int menu() {
+    }else{
+        rlutil::locate(posx,posy);
+        rlutil::setBackgroundColor(rlutil::COLOR::BLACK);
+        cout << "" << text << "" ;
+
+    }
+    rlutil::setBackgroundColor(rlutil::COLOR::BLACK);
+
+}
+
+
+
+int menu(){
+    
+    
+
+    int op = 1, y = 0;
+    rlutil::hidecursor();
+    rlutil::setColor(rlutil::COLOR::WHITE);
+    rlutil::setBackgroundColor(rlutil::COLOR::BLACK);
+    do
+    {
+        limpiar_pantalla();
+
+        
+        rlutil::locate(30,10);
+        cout <<"Sobrevivir al año";
+        
+        showitem("Nueva Partida          ",30,12, y == 0);
+        showitem("Highscore de la sesión ",30,13, y == 1);
+        showitem("Glosario Financiero    ",30,14, y == 2);
+        showitem("Salir                  ",30,15, y == 3);
+
+
+        int key = rlutil::getkey();
+
+
+        switch (key)
+        {
+        case 65: //arriba
+            if (y>0){
+                rlutil::locate(27,10+y);
+                cout << " " ;
+                rlutil::locate(45,10+y);
+                cout << " " ;
+                y--;
+            }
+            break;
+        case 66: //abajo
+            if (y<3){
+                rlutil::locate(27,10+y);
+                cout << " " ;
+                rlutil::locate(45,10+y);
+                cout << " " ;
+                y++;
+                }
+            break;
+        case 10://enter
+            
+            switch (y)
+            {
+            case 0:
+                return(y);
+                break;
+            case 1:
+                return(y);
+                break;
+            case 2:
+                return(y);
+                break;
+            case 3:          
+                return(y);
+                break;
+            }
+        
+        }
+
+        op = 1;
+    
+    } while (op != 0);
+
+    return (op);
+    
+
+}
+
+int menu2() {
 
     int opmenu = -1;
     limpiar_pantalla();
 
-    string texto = string("SOBREVIVE EL A") + char(165) + "O";    enmarcar_texto(texto);
+    rlutil::locate(0,10);
+    string texto = string("SOBREVIVE EL A") + char(165) + "O";    
+    enmarcar_texto(texto);
 
-
+    rlutil::locate(20,11);
     cout <<"1. Nueva Partida"<<endl;
     cout <<"2. Highscore de la sesión"<<endl;
     cout <<"3. Glosario Financiero"<<endl;
@@ -87,23 +182,64 @@ int menu() {
     }
 
 void limpiar_pantalla(){
-    system("cls");
+    //system("cls");
+    rlutil::cls();
 }
 
 bool salir_programa(){
     bool valor;
     limpiar_pantalla();
-    int opcion = -1;
-    while(opcion<1 || opcion>2){
+    int op = -1, y = 0;
+    
+    do
+    {
+        limpiar_pantalla();
+        rlutil::locate(0,0);
         separador();
         texto_centrado("DESEA SALIR DEL JUEGO?");
         separador();
-        cout << "1. Si" << endl;
-        cout << "2. No" << endl;
-        cout <<"Ingrese una opcion: ";
-        cin >> opcion;
 
-        switch(opcion){
+        showitem("SI",30,10,y == 0);
+        showitem("NO",30,11,y == 1);
+        
+        int key = rlutil::getkey();
+
+
+        switch (key)
+        {
+        case 65: //arriba
+            if (y>0){
+                rlutil::locate(27,10+y);
+                cout << " " ;
+                rlutil::locate(45,10+y);
+                cout << " " ;
+                y--;
+            }
+            break;
+        case 66: //abajo
+            if (y<1){
+                rlutil::locate(27,10+y);
+                cout << " " ;
+                rlutil::locate(45,10+y);
+                cout << " " ;
+                y++;
+                }
+            break;
+        case 10://enter
+            
+            switch (y)
+            {
+            case 0:
+                return(y);
+                break;
+            case 1:
+                return(y);
+                break;
+            }
+        
+        }
+
+        switch(op){
             case 1:
                 limpiar_pantalla();
                 cout << "Cerrando programa" << endl;
@@ -119,7 +255,8 @@ bool salir_programa(){
                 valor = true;
                 break;
         }
-    }
+    } while (op !=0);
+    
     return (valor);
 }
 
@@ -144,61 +281,75 @@ void texto_largo(string text) {
 void glosario(){
     bool ejecutar_glosario = true;
     while(ejecutar_glosario){
-        int opcion = -1;
-        while (opcion<1 || opcion>12){
+        int opcion = -1, y = 1;
+        do{
             limpiar_pantalla();
+            rlutil::locate(30,1);
+            cout << endl;
             enmarcar_texto("GLOSARIO FINANCIERO");
 
-            for (int i = 1; i <= CANTIDAD_TITULOS_GLOSARIO; i++){
-                cout << i << " - " << GLOSARIO_TITULOS[i-1] << endl;
+
+            for (int i = 1; i <= CANTIDAD_TITULOS_GLOSARIO-1; i++){
+               showitem(GLOSARIO_TITULOS[i],30,5+i,y == i); 
             }
+            showitem("SALIR DEL GLOSARIO",30,18,y==13);
 
-            separador();
+            int key = rlutil::getkey();
 
-            cout << "Ingrese una opcion para saber mas sobre la misma: ";
-            cin >> opcion;
 
-            if (opcion<1 || opcion>12){
-                limpiar_pantalla();
-                cout <<"Ingrese un numero que corresponda a algun titulo" << endl;
-                cout << "Precione cualquier tecla para continuar...";
-                cin.ignore();
-                cin.get();
-                continue;
+            switch (key)
+            {
+                case 65: //arriba
+                    if (y>1){
+                        rlutil::locate(27,5+y);
+                        cout << " " ;
+                        rlutil::locate(45,5+y);
+                        cout << " " ;
+                        if (y==13){
+                            y--;
+                        }
+                        y--;
+                    }
+                    break;
+                case 66: //abajo
+                    if (y<13){
+                        rlutil::locate(27,5+y);
+                        cout << " " ;
+                        rlutil::locate(45,5+y);
+                        cout << " " ;
+                        if (y==11){
+                            y++;
+                        }
+                        y++;
+                        }
+                    break;
+                case 10://enter
+                    cout << "Puto";
+                    limpiar_pantalla();
+
+                    switch (y)
+                    {
+                    case 13:
+                        ejecutar_glosario=false;
+                        opcion = 0;
+                        break;
+                    
+                    default:
+                        separador();
+                        cout << GLOSARIO_TITULOS[y] << endl ;
+                        separador();
+                        texto_centrado("Descripcion");
+                        separador();
+                        texto_largo(GLOSARIO_DEFINICIONES[y]);
+                        
+                        pausar();
+                        break;
+                }
             }
+        } while (opcion!= 0);
+        
 
-            limpiar_pantalla();
-
-            separador();
-            cout << GLOSARIO_TITULOS[opcion-1] << endl ;
-            separador();
-            texto_centrado("Descripcion");
-            separador();
-
-            texto_largo(GLOSARIO_DEFINICIONES[1]);
-
-            separador();
-            texto_centrado("¿QUÉ DESEÁS HACER AHORA?");
-            separador();
-            cout << "[1] Volver al Glosario (Buscar otro término)" << endl;
-            cout << "[2] Salir del Glosario" << endl;
-            separador();
-
-            int op = -1;
-
-            cin >> op;
-
-            if (op == 1){
-                continue;
-            }
-            else if(op == 2){
-                ejecutar_glosario = false;
-            }
-            else{
-                cout << "Ingrese una opcion correcta" << endl;
-            }
-
-        }
+        
     }
 }
 
