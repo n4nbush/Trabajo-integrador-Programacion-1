@@ -7,7 +7,7 @@
 
 using namespace std;
 
-void eventos(int mes, float &sobrante_de_plata, float &sueldo, float &alquiler, string &evento, string &evento_descripcion, float &gastos){
+void eventos(int mes, float &sobrante_de_plata, float &sueldo, float &alquiler, string &evento, string &evento_descripcion, float &gastos, float &valor_bitcoin){
 
     if (mes == 1){
         evento ="Deposito de garantia";
@@ -27,6 +27,18 @@ void eventos(int mes, float &sobrante_de_plata, float &sueldo, float &alquiler, 
         evento = "Actualizacion del alquiler";
         evento_descripcion = "Sube el alquiler un 40%" ;
         alquiler *= 1.4;
+    }
+
+    if (mes == 6 || mes == 11){
+        if(rand() % 100 < 50){
+            evento = "Suba del historiaca de bitcoin ";
+            evento_descripcion = "BTC sube en un +60%";
+            valor_bitcoin *= 1.60;
+        }else{
+            evento = "Caida historiaca de bitcoin ";
+            evento_descripcion = "BTC cae en un 50%";
+            valor_bitcoin *= 0.50;
+        }
     }
     
 

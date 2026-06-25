@@ -3,7 +3,7 @@
 
 #include <string>
 
-void eventos(int mes, float &sobrante_de_plata, float &sueldo, float &alquiler, std::string &evento, std::string &evento_descripcion, float &gastos);
+void eventos(int mes, float &sobrante_de_plata, float &sueldo, float &alquiler, std::string &evento, std::string &evento_descripcion, float &gastos,float &valor_bitcoin);
 
 void eventos_aleatorios(float &sobrante_de_plata, float &gastos);
 

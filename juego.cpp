@@ -54,6 +54,11 @@ void nuevaPartida(const string meses[]){
     float max_ahorro = 0;
     float acumulador_inflacion = 1.0;
     int meses_rojo = 0;
+    float limite_superior = 150000*1.10;
+    float limite_inferior = 150000*0.90;
+    float pesos;
+
+
     string mes_max_gastos, mes_max_ahorro;
 
     
@@ -63,7 +68,7 @@ void nuevaPartida(const string meses[]){
         bool cobrar_aguinaldo = false;
         
         gastosFijos = alquiler + servicios + transporte + alimentacion;
-        sobrante_de_plata = sueldo - gastosFijos;
+        sobrante_de_plata = (sueldo - gastosFijos)+pesos;
         float gastos = 0, ahorros = 0;
         gastos = gastosFijos;
         ahorros = 0;
@@ -80,7 +85,7 @@ void nuevaPartida(const string meses[]){
         string evento = "";
         string evento_descripcion = "";
 
-        eventos(i, sobrante_de_plata, sueldo, alquiler, evento, evento_descripcion,gastos);
+        eventos(i, sobrante_de_plata, sueldo, alquiler, evento, evento_descripcion,gastos,valor_bitcoin);
 
         cout << "=======================================================" << endl;
         cout << i << "/" << rondas << " - " << meses[i-1]
@@ -152,15 +157,21 @@ void nuevaPartida(const string meses[]){
         alimentacion *= 1.07;
 
         valor_dolar *= 1.05;
-        valor_bitcoin *= 1.00;
+        if (i%2==0){
+            valor_bitcoin *= 1.25;
+        }else{
+            valor_bitcoin *= 0.80;
+        }
         valor_sp500 *= 1.01;
 
         if (meses_rojo==2){
-            cout << "GAME OVER" << endl;
-            cout << "Tuviste 3 meses seguidos en rojo";
+            limpiar_pantalla();
+            cout << "=========================" << endl;
+            cout << "        GAME OVER        " << endl;
+            cout << "=========================" << endl;
+            cout << "Tuviste 3 meses seguidos en rojo." << endl;
             pausar();
             i=rondas;
-
         }else if (sobrante_de_plata<0){
             meses_rojo++;
         }
@@ -174,6 +185,8 @@ void nuevaPartida(const string meses[]){
             mes_max_ahorro = meses[i-1];
         }
         acumulador_inflacion = acumulador_inflacion*1.07;
+
+        pesos = sobrante_de_plata;
 
     }
 
@@ -205,6 +218,15 @@ void nuevaPartida(const string meses[]){
     separador();
     cout << "Patrimonio real: $" << patrimonio_real << " Pesos"<<endl ;
 
+    if (patrimonio_real >= limite_inferior && patrimonio_real <= limite_superior) {
+    cout << "Resultado: Lograste mantener estable tu patrimonio (Empate)." << endl;
+    } 
+    else if (patrimonio_real > limite_superior) {
+        cout << "Resultado: ¡Excelente! Le ganaste a la inflacion." << endl;
+    } 
+    else {
+        cout << "Resultado: La inflacion licuo tus ahorros. Perdiste poder adquisitivo." << endl;
+    }
 
     pausar();
 }
