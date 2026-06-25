@@ -156,7 +156,8 @@ void nuevaPartida(const string meses[]){
         valor_sp500 *= 1.01;
 
         if (meses_rojo==2){
-            cout << "GAME OVER";
+            cout << "GAME OVER" << endl;
+            cout << "Tuviste 3 meses seguidos en rojo";
             pausar();
             i=rondas;
 
