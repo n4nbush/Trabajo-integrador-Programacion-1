@@ -52,6 +52,7 @@ void nuevaPartida(const string meses[]){
     float valor_sp500 = 650;
     float max_gastos = 0;
     float max_ahorro = 0;
+    float acumulador_inflacion = 1.0;
     string mes_max_gastos, mes_max_ahorro;
     
     for(int i = 1; i <= rondas; i++){
@@ -161,15 +162,20 @@ void nuevaPartida(const string meses[]){
             max_ahorro= ahorros;
             mes_max_ahorro = meses[i-1];
         }
+        acumulador_inflacion = acumulador_inflacion*1.07;
 
     }
 
+    float inflacion_acumulada;
+    inflacion_acumulada = (acumulador_inflacion-1)*100;
+    inflacion_acumulada = ((int)(inflacion_acumulada*100))/100.0;
+    float patrimonio_real = (sobrante_de_plata + (dolares * valor_dolar) + (bitcoin * valor_bitcoin * valor_dolar) + (sp500 * valor_sp500 * valor_dolar)) / acumulador_inflacion;    
+    patrimonio_real = ((int)(patrimonio_real * 100)) / 100.0;
     separador();
     cout << "Pantalla final" << endl;
     separador();
     
     cout << "Capital post partida" << endl;
-    int inversiones = (dolares*valor_dolar)+(bitcoin*valor_bitcoin)+(sp500*valor_sp500);
     cout << "Patrimonio"<< endl;
     separador();
     cout << "Pesos: $ " << sobrante_de_plata << endl;
@@ -182,6 +188,11 @@ void nuevaPartida(const string meses[]){
     separador();
     cout << "Mes con mas ahorros: " << mes_max_ahorro << endl;
     cout << "Cantidad ahorrada: $" << max_ahorro << endl;
+    separador();
+    cout << "Inflacion acumulada en la partida: %" << inflacion_acumulada << endl;
+    separador();
+    cout << "Patrimonio real: $" << patrimonio_real << " Pesos"<<endl ;
+
 
     pausar();
 }
