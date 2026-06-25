@@ -53,7 +53,9 @@ void nuevaPartida(const string meses[]){
     float max_gastos = 0;
     float max_ahorro = 0;
     float acumulador_inflacion = 1.0;
+    int meses_rojo = 0;
     string mes_max_gastos, mes_max_ahorro;
+
     
     for(int i = 1; i <= rondas; i++){
         limpiar_pantalla();
@@ -153,6 +155,14 @@ void nuevaPartida(const string meses[]){
         valor_bitcoin *= 1.00;
         valor_sp500 *= 1.01;
 
+        if (meses_rojo==2){
+            cout << "GAME OVER";
+            pausar();
+            i=rondas;
+
+        }else if (sobrante_de_plata<0){
+            meses_rojo++;
+        }
         
         if (gastos>max_gastos){
             max_gastos = gastos;
@@ -171,6 +181,7 @@ void nuevaPartida(const string meses[]){
     inflacion_acumulada = ((int)(inflacion_acumulada*100))/100.0;
     float patrimonio_real = (sobrante_de_plata + (dolares * valor_dolar) + (bitcoin * valor_bitcoin * valor_dolar) + (sp500 * valor_sp500 * valor_dolar)) / acumulador_inflacion;    
     patrimonio_real = ((int)(patrimonio_real * 100)) / 100.0;
+    limpiar_pantalla();
     separador();
     cout << "Pantalla final" << endl;
     separador();
