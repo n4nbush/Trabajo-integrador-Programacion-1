@@ -56,7 +56,6 @@ void nuevaPartida(const string meses[]){
     int meses_rojo = 0;
     float limite_superior = 150000*1.10;
     float limite_inferior = 150000*0.90;
-    float pesos;
 
 
     string mes_max_gastos, mes_max_ahorro;
@@ -68,7 +67,7 @@ void nuevaPartida(const string meses[]){
         bool cobrar_aguinaldo = false;
         
         gastosFijos = alquiler + servicios + transporte + alimentacion;
-        sobrante_de_plata = (sueldo - gastosFijos)+pesos;
+        sobrante_de_plata = (sueldo - gastosFijos)-9999999;
         float gastos = 0, ahorros = 0;
         gastos = gastosFijos;
         ahorros = 0;
@@ -167,9 +166,9 @@ void nuevaPartida(const string meses[]){
         if (meses_rojo==2){
             limpiar_pantalla();
             cout << "=========================" << endl;
-            cout << "        GAME OVER        " << endl;
+            cout << "        💀 Game Over    " << endl;
             cout << "=========================" << endl;
-            cout << "Tuviste 3 meses seguidos en rojo." << endl;
+            cout << "Te fuiste a vivir a lo de tus viejos" << endl;
             pausar();
             i=rondas;
         }else if (sobrante_de_plata<0){
@@ -186,14 +185,13 @@ void nuevaPartida(const string meses[]){
         }
         acumulador_inflacion = acumulador_inflacion*1.07;
 
-        pesos = sobrante_de_plata;
 
     }
 
     float inflacion_acumulada;
     inflacion_acumulada = (acumulador_inflacion-1)*100;
     inflacion_acumulada = ((int)(inflacion_acumulada*100))/100.0;
-    float patrimonio_real = (sobrante_de_plata + (dolares * valor_dolar) + (bitcoin * valor_bitcoin * valor_dolar) + (sp500 * valor_sp500 * valor_dolar)) / acumulador_inflacion;    
+    float patrimonio_real = (fondo_emergencia + (dolares * valor_dolar) + (bitcoin * valor_bitcoin * valor_dolar) + (sp500 * valor_sp500 * valor_dolar)) / acumulador_inflacion;    
     patrimonio_real = ((int)(patrimonio_real * 100)) / 100.0;
     limpiar_pantalla();
     separador();
@@ -203,10 +201,11 @@ void nuevaPartida(const string meses[]){
     cout << "Capital post partida" << endl;
     cout << "Patrimonio"<< endl;
     separador();
-    cout << "Pesos: $ " << sobrante_de_plata << endl;
+    cout << "Pesos: $ " << fondo_emergencia << endl;
     cout << "Dolares: USD " << int(dolares) << " ($" << int(dolares * valor_dolar) << ")" << endl;
     cout << "Bitcoin: " << bitcoin << " BTC ($" << int(bitcoin * valor_bitcoin * valor_dolar) << ")" << endl;
     cout << "S&P 500: " << sp500 << " ETF ($" << int(sp500 * valor_sp500 * valor_dolar) << ")" << endl;
+    cout << "Total en pesos: $" << (fondo_emergencia + (dolares * valor_dolar) + (bitcoin * valor_bitcoin * valor_dolar) + (sp500 * valor_sp500 * valor_dolar)) << endl;
     separador();
     cout << "Mes con mas gastos: " << mes_max_gastos << endl;
     cout << "Cantidad gastada: $" << max_gastos << endl;
@@ -216,16 +215,21 @@ void nuevaPartida(const string meses[]){
     separador();
     cout << "Inflacion acumulada en la partida: %" << inflacion_acumulada << endl;
     separador();
+    cout << "Patrimonio inicial: $" << 150000 << " Pesos"<<endl ;
     cout << "Patrimonio real: $" << patrimonio_real << " Pesos"<<endl ;
 
     if (patrimonio_real >= limite_inferior && patrimonio_real <= limite_superior) {
-    cout << "Resultado: Lograste mantener estable tu patrimonio (Empate)." << endl;
+    cout << "😐 Empataste con la inflación" << endl;
+    cout << "No perdiste, pero tampoco ganaste" << endl;
+
     } 
     else if (patrimonio_real > limite_superior) {
-        cout << "Resultado: ¡Excelente! Le ganaste a la inflacion." << endl;
+        cout << "🏆 ¡Sobreviviste el año con dignidad!" << endl;
+        cout << "Mensaje educativo: Lograste vencer a la inflación" << endl;
     } 
     else {
-        cout << "Resultado: La inflacion licuo tus ahorros. Perdiste poder adquisitivo." << endl;
+        cout << "😢 La inflación te comió" << endl;
+        cout << "Tu dinero vale menos que en enero" << endl;
     }
 
     pausar();
