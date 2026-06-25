@@ -5,132 +5,67 @@
 #include "finanzas.h"
 using namespace std;
 
-void configurar_juego(string &nombre_jugador, int &duracion, float &patrimonio, float inversiones[]){
-
-
-    int respuesta = 2;
-    bool datos_validos = false;
-
-
-    while(!datos_validos){
-
-        // ENTRADA DE NOMBRE
-
-        limpiar_pantalla();
-        enmarcar_texto("CONFIGURANDO PARTIDA");
-        cout << "Ingrese su nombre: ";
-        std::getline(cin, nombre_jugador);
-        limpiar_pantalla();
-
-        // ENTRADA DE DURACION
-        while (duracion<1 || duracion>12){
-            enmarcar_texto("CONFIGURANDO PARTIDA");
-            cin.ignore();
-            cout << "Bienvenido " << nombre_jugador << endl;
-            cin.ignore();
-            cout << "Cuantos meses va a durar la partida: ";
-            cin >> duracion;
-
-
-            // VALIDAMOS DURACION
-            if (duracion<1 || duracion>12){
-                cout << "Duracion invalida. Debe ser un valor entre 1 y 12 meses";
-                cout << "Presione Enter para continuar...";
-                cin.ignore();
-                cin.get();
-                continue;
-            }
-        }
-
-        // ENTREGA DE DATOS
-        limpiar_pantalla();
-        enmarcar_texto("DETALLES DE LA PARTIDA");
-
-        cout << "Nombre del jugador: " << nombre_jugador << endl;
-        cout << "Duracion: " << duracion << " meses" << endl;
-        cout << "Patrimonia inicial: " << "$" << patrimonio << endl;
-        cout << "Inversiones: " << "$" << inversiones << endl;
-        cout << endl;
-
-        // SOLICITAMOS CONFIRMACION AL USUARIO
-        cout << "Los datos son correctos?" << endl;
-        cout << "1. Si" << endl;
-        cout << "2. No" << endl;
-        cout <<"Ingrese una opcion: ";
-        cin >> respuesta;
-
-        switch (respuesta)
-        {
-        case 1:
-            limpiar_pantalla();
-            cout << "Iniciando juego..." << endl;
-            cout << "Preciones una tecla para iniciar el juego" << endl;
-            cin.ignore();
-            cin.get();
-            datos_validos = true;
-            break;
-        case 2:
-            limpiar_pantalla();
-            cout << "Regresando a los ajustes..." << endl;
-            cin.ignore();
-            cin.get();
-            duracion = 0;
-            break;
-        default:
-            limpiar_pantalla();
-            cout << "Ingrese una respuesta correcta";
-            cin.ignore();
-            cin.get();
-            break;
-        }
-    }
-}
-
 /// primer funcion para el punto 1
 void nuevaPartida(const string meses[]){
     string nombreJugador;
-    int rondas;
+    int rondas = 0;
 
     limpiar_pantalla();
+
+    cin.ignore(1000, '\n');
 
     cout << "Ingrese su nombre completo: ";
     getline(cin, nombreJugador);
 
-    limpiar_pantalla();
-    cout << "Bienvenido " << nombreJugador << endl;
+    while(rondas < 1 || rondas > 12){
+        limpiar_pantalla();
 
-    cout << "Cuantas rondas queres jugar (1 minimo y un maximo de 12): ";
-    cin >> rondas;
+        cout << "Bienvenido " << nombreJugador << endl;
+        cout << "Cuantas rondas queres jugar (1 minimo y un maximo de 12): ";
+        cin >> rondas;
+
+        if(rondas < 1 || rondas > 12){
+            cout << "Cantidad invalida. Debe ser entre 1 y 12 meses." << endl;
+            cout << "Presione cualquier tecla para continuar...";
+            pausar();
+        }
+    }
 
     cout << "Perfecto seleccionaste la cantidad de " << rondas << " meses" << endl;
-   pausar();
+    pausar();
 
-            float alquiler = 180000;
-            float servicios = 45000;
-            float transporte = 30000;
-            float alimentacion = 80000;
-            float gastosFijos = 0;
-            float sueldo=500000;
-            float sobrante_de_plata=150000;
-            float dolares=0;
-            float bitcoin=0;
-            float sp500=0;
-            float valor_dolar=1000;
-            float aguinaldo=0;
-            float fondo_emergencia = 0;
-            float capital_invertir = 0;
+    float alquiler = 180000;
+    float servicios = 45000;
+    float transporte = 30000;
+    float alimentacion = 80000;
+    float gastosFijos = 0;
+    float sueldo = 500000;
+    float sobrante_de_plata = 150000;
+    float dolares = 0;
+    float bitcoin = 0;
+    float sp500 = 0;
+    float aguinaldo = 0;
+    float fondo_emergencia = 0;
+    float capital_invertir = 0;
+    float valor_dolar = 1000;
+    float valor_bitcoin = 60000;
+    float valor_sp500 = 650;
+    float max_gastos = 0;
+    float max_ahorro = 0;
+    string mes_max_gastos, mes_max_ahorro;
+    
+    for(int i = 1; i <= rondas; i++){
+        limpiar_pantalla();
+        
+        bool cobrar_aguinaldo = false;
+        
+        gastosFijos = alquiler + servicios + transporte + alimentacion;
+        sobrante_de_plata = sueldo - gastosFijos;
+        float gastos = 0, ahorros = 0;
+        gastos = gastosFijos;
+        ahorros = 0;
 
-
-for(int i=1; i<=rondas; i++){
-    limpiar_pantalla();
-
-    bool cobrar_aguinaldo = false;
-
-    gastosFijos = alquiler + servicios + transporte + alimentacion;
-    sobrante_de_plata = sueldo - gastosFijos;
-
-
-        if(i%6==0){
+        if(i % 6 == 0){
             cobrar_aguinaldo = true;
             aguinaldo = sueldo / 2;
         }
@@ -139,72 +74,114 @@ for(int i=1; i<=rondas; i++){
             sobrante_de_plata += aguinaldo;
         }
 
-        string evento ="";
+        string evento = "";
         string evento_descripcion = "";
 
-        eventos(i, sobrante_de_plata, sueldo, alquiler, evento, evento_descripcion);
-
+        eventos(i, sobrante_de_plata, sueldo, alquiler, evento, evento_descripcion,gastos);
 
         cout << "=======================================================" << endl;
-        cout << i << "/" << rondas << " - " << meses[i-1] << "               Jugador: " << nombreJugador << endl;
+        cout << i << "/" << rondas << " - " << meses[i-1]
+             << "               Jugador: " << nombreJugador << endl;
         cout << "=======================================================" << endl;
 
+        cout << "TENENCIAS ACTUALES: " << endl;
+        cout << "Disponible en pesos: $" << int(sobrante_de_plata) << endl;
+        cout << "Fondo de emergencia: $" << int(fondo_emergencia) << endl;
+        cout << "Dolares: USD " << int(dolares) << " ($" << int(dolares * valor_dolar) << ")" << endl;
+        cout << "Bitcoin: " << bitcoin << " BTC ($" << int(bitcoin * valor_bitcoin * valor_dolar) << ")" << endl;
+        cout << "S&P 500: " << sp500 << " ETF ($" << int(sp500 * valor_sp500 * valor_dolar) << ")" << endl;
+        cout << endl;
 
-        cout << "TENDENCIAS ACTUALES: "<< endl;
-        cout << "Disponible en pesos:$ "<< sobrante_de_plata << endl;
-        cout << "Dolares:$ " << dolares <<endl;
-        cout << "Bitcoin:$ "<< bitcoin <<endl;
-        cout << "S&P 500:$ "<< sp500 <<endl;
-        cout <<endl;
+        cout << "-------------------------------------------------------" << endl;
+        cout << "Sueldo del mes: $" << int(sueldo) << endl;
+        cout << "Gastos fijos: $" << int(gastosFijos) << endl;
+        cout << "Valor dolar: $" << int(valor_dolar) << endl;
+        cout << "Valor Bitcoin: USD " << int(valor_bitcoin) << endl;
+        cout << "Valor S&P 500: USD " << int(valor_sp500) << endl;
 
-        cout << "- - - - - - - - - - - - - - - - - - - - - - - - - - - -" << endl;
-        cout << "Sueldo del mes:$ " << sueldo << endl;
-        cout << "Gastos fijos:$ " << gastosFijos << endl;
         if(cobrar_aguinaldo){
-            cout << "Este mes cobraste aguinaldo $ " << aguinaldo<< endl;
+            cout << "Este mes cobraste aguinaldo: $" << int(aguinaldo) << endl;
         }
-        cout << "======================================================="<<endl;
 
-        //if (i == 1){cout << "Deposito de garantia" << endl;}
+        cout << "=======================================================" << endl;
+
         cout << "Eventos: " << endl;
-        if (evento.length() != 0 && evento_descripcion.length() != 0){
+        if(evento.length() != 0 && evento_descripcion.length() != 0){
             cout << evento << endl;
             cout << evento_descripcion << endl << endl;
         }
+        else{
+            cout << "No hubo eventos fijos este mes." << endl << endl;
+        }
 
-        eventos_aleatorios(sobrante_de_plata);
+        eventos_aleatorios(sobrante_de_plata,gastos);
 
         string texto = "Sobrante actualizado: $" + to_string(int(sobrante_de_plata));
-
         enmarcar_texto(texto);
 
-        cout << "Precione cualquier tecla para continuar...";
-
-
-
+        cout << "Presione cualquier tecla para continuar...";
         pausar();
         limpiar_pantalla();
 
-        distribuir_sobrante(sobrante_de_plata, fondo_emergencia, capital_invertir,dolares,bitcoin,sp500);
+        distribuir_sobrante(
+            sobrante_de_plata,
+            fondo_emergencia,
+            capital_invertir,
+            dolares,
+            bitcoin,
+            sp500,
+            valor_dolar,
+            valor_bitcoin,
+            valor_sp500,
+            ahorros
+        );
+
         cout << endl << endl;
-        cout << "Fondo de emergencia actual: $" << fondo_emergencia << endl;
-        cout << "Capital para invertir acumulado: $" << capital_invertir << endl;
+        cout << "Fondo de emergencia actual: $" << int(fondo_emergencia) << endl;
+        cout << "Capital para invertir acumulado: $" << int(capital_invertir) << endl;
 
-        cout << endl << "Precione cualquier tecla para continuar...";
-
+        cout << endl << "Presione cualquier tecla para continuar...";
         pausar();
         limpiar_pantalla();
-
-
 
         servicios *= 1.07;
         transporte *= 1.07;
         alimentacion *= 1.07;
-        valor_dolar *=1.05;
 
-     /// termina el for
+        valor_dolar *= 1.05;
+        valor_bitcoin *= 1.00;
+        valor_sp500 *= 1.01;
+
+        
+        if (gastos>max_gastos){
+            max_gastos = gastos;
+            mes_max_gastos = meses[i-1];
+        }
+        if (ahorros>max_ahorro){
+            max_ahorro= ahorros;
+            mes_max_ahorro = meses[i-1];
+        }
+
     }
 
+    separador();
+    cout << "Pantalla final" << endl;
+    separador();
+    
+    cout << "Capital post partida" << endl;
+    int inversiones = (dolares*valor_dolar)+(bitcoin*valor_bitcoin)+(sp500*valor_sp500);
+    cout << "Patrimonio"<< endl;
+    separador();
+    cout << "Pesos: $ " << sobrante_de_plata << endl;
+    cout << "Dolares: USD " << int(dolares) << " ($" << int(dolares * valor_dolar) << ")" << endl;
+    cout << "Bitcoin: " << bitcoin << " BTC ($" << int(bitcoin * valor_bitcoin * valor_dolar) << ")" << endl;
+    cout << "S&P 500: " << sp500 << " ETF ($" << int(sp500 * valor_sp500 * valor_dolar) << ")" << endl;
+    separador();
+    cout << "Mes con mas gastos: " << mes_max_gastos << endl;
+    cout << "Cantidad gastada: $" << max_gastos << endl;
+    separador();
+    cout << "Mes con mas ahorros: " << mes_max_ahorro << endl;
+    cout << "Cantidad ahorrada: $" << max_ahorro << endl;
+
     pausar();
-    ///termina la funcion
 }

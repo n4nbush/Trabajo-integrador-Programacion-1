@@ -178,7 +178,7 @@ void glosario(){
             texto_centrado("Descripcion");
             separador();
 
-            texto_largo(GLOSARIO_DEFINICIONES[1]);
+            texto_largo(GLOSARIO_DEFINICIONES[opcion - 1]);
 
             separador();
             texto_centrado("¿QUÉ DESEÁS HACER AHORA?");
@@ -199,6 +199,7 @@ void glosario(){
             }
             else{
                 cout << "Ingrese una opcion correcta" << endl;
+                pausar();
             }
 
         }

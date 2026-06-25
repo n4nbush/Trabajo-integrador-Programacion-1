@@ -36,7 +36,7 @@
 		<Unit filename="constantes.h" />
 		<Unit filename="finanzas.cpp" />
 		<Unit filename="finanzas.h" />
-		<Unit filename="higscore.cpp" />
+		<Unit filename="highscore.cpp" />
 		<Unit filename="juego.cpp" />
 		<Unit filename="juego.h" />
 		<Unit filename="main.cpp" />

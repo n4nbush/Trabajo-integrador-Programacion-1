@@ -7,12 +7,14 @@
 
 using namespace std;
 
-void eventos(int mes, float &sobrante_de_plata, float &sueldo, float &alquiler, string &evento, string &evento_descripcion){
+void eventos(int mes, float &sobrante_de_plata, float &sueldo, float &alquiler, string &evento, string &evento_descripcion, float &gastos){
 
     if (mes == 1){
         evento ="Deposito de garantia";
         evento_descripcion = "Se descuentan: $180000";
         sobrante_de_plata -= 180000;
+        gastos += 180000;
+
     }
 
     if (mes == 4 || mes == 7 || mes == 10){
@@ -26,12 +28,12 @@ void eventos(int mes, float &sobrante_de_plata, float &sueldo, float &alquiler, 
         evento_descripcion = "Sube el alquiler un 40%" ;
         alquiler *= 1.4;
     }
-
+    
 
 }
 
 
-void invocar_evento_aleatorio(int contador_eventos, float &sobrante_de_plata){
+void invocar_evento_aleatorio(int contador_eventos, float &sobrante_de_plata, float &gastos){
 
     int numero = rand() % CANTIDAD_EVENTOS_ALEATOREOS;
 
@@ -45,29 +47,30 @@ void invocar_evento_aleatorio(int contador_eventos, float &sobrante_de_plata){
          << IMPACTO_ECONOMICO_EVENTOS_ALEATOREOS[numero] << endl;
 
     sobrante_de_plata -= IMPACTO_ECONOMICO_EVENTOS_ALEATOREOS[numero];
+    gastos += IMPACTO_ECONOMICO_EVENTOS_ALEATOREOS[numero];
 
     cout << "Sobrante actualizado: $" << sobrante_de_plata << endl;
     cout << endl;
 }
 
-void eventos_aleatorios(float &sobrante_de_plata){
+void eventos_aleatorios(float &sobrante_de_plata, float &gastos){
 
     int contador_eventos = 0;
 
     if(rand() % 100 < 75){
 
         contador_eventos++;
-        invocar_evento_aleatorio(contador_eventos, sobrante_de_plata);
+        invocar_evento_aleatorio(contador_eventos, sobrante_de_plata,gastos);
 
         if(rand() % 100 < 15){
 
             contador_eventos++;
-            invocar_evento_aleatorio(contador_eventos, sobrante_de_plata);
+            invocar_evento_aleatorio(contador_eventos, sobrante_de_plata, gastos);
 
             if(rand() % 100 < 10){
 
                 contador_eventos++;
-                invocar_evento_aleatorio(contador_eventos, sobrante_de_plata);
+                invocar_evento_aleatorio(contador_eventos, sobrante_de_plata,gastos);
             }
         }
     }
@@ -77,57 +80,57 @@ void eventos_aleatorios(float &sobrante_de_plata){
     }
 }
 
-void menu_inversion(float &capital_invertir, float &sobrante_de_plata, float &dolares, float &bitcoin, float &sp500){
+void menu_inversion(float &capital_invertir,float &dolares,float &bitcoin,float &sp500,float &valor_dolar,float &valor_bitcoin,float &valor_sp500){
+    int opcion;
 
-
-    int op = -1, opcion = 0;
-
-    do{
-
+    while(true)
+    {
         limpiar_pantalla();
+
         enmarcar_texto("MENU DE INVERSION");
-        cout << "Monto a invertir: $" << capital_invertir << endl;
-        cout << "En que instrumento desea inverir:" << endl;
+
+        cout << "Monto disponible para invertir: $" << capital_invertir << endl;
         separador();
 
-        cout << "1- Pesos en cuenta" << endl;
-        cout << "2- Dolares(USD)" << endl;
-        cout << "3- Bitcoin(BTC)" << endl;
-        cout << "4- S&P 500(ETF)" << endl;
+        cout << "1 - Comprar dolares (USD)" << endl;
+        cout << "2 - Comprar Bitcoin (BTC)" << endl;
+        cout << "3 - Invertir en S&P 500 (ETF)" << endl;
+        cout << endl;
 
-        cout << "Ingrese una opcion: " ;
+        cout << "Ingrese una opcion: ";
         cin >> opcion;
 
-        switch(opcion){
+        switch(opcion)
+        {
             case 1:
-                sobrante_de_plata += capital_invertir;
-                op = 0;
-                break;
+                dolares += capital_invertir / valor_dolar;
+                capital_invertir = 0;
+                return;
+
             case 2:
-                dolares += capital_invertir;
-                op = 0;
-                break;
+                bitcoin += (capital_invertir / valor_dolar) / valor_bitcoin;
+                capital_invertir = 0;
+                return;
+
             case 3:
-                bitcoin += capital_invertir;
-                op = 0;
-                break;
-            case 4:
-                sp500 += capital_invertir;
-                op = 0;
+                sp500 += (capital_invertir / valor_dolar) / valor_sp500;
+                capital_invertir = 0;
+                return;
+
+            default:
+                cout << endl;
+                cout << "Opcion invalida. Intente nuevamente." << endl;
+                pausar();
                 break;
         }
-            
-
-    }while(op!=0);
-
+    }
 }
 
-    void distribuir_sobrante(float sobrante_de_plata, float &fondo_emergencia, float &capital_invertir, float &dolares, float &bitcoin, float &sp500){
-
+void distribuir_sobrante(float sobrante_de_plata, float &fondo_emergencia, float &capital_invertir, float &dolares, float &bitcoin,float &sp500, float &valor_dolar, float &valor_bitcoin, float &valor_sp500, float &ahorros){
     int decision;
 
-    if(sobrante_de_plata > 0){
-
+    if(sobrante_de_plata > 0)
+    {
         cout << "Como distribuis tu sobrante del mes?" << endl;
         cout << "Tu sueldo sobrante es de: $" << sobrante_de_plata << endl;
         cout << endl;
@@ -138,40 +141,43 @@ void menu_inversion(float &capital_invertir, float &sobrante_de_plata, float &do
         cout << "4. 100% inversion - 0% fondo de emergencia" << endl;
 
         cout << "Ingrese una opcion: ";
-
         cin >> decision;
 
-        switch(decision){
-
+        switch(decision)
+        {
             case 1:
                 capital_invertir += sobrante_de_plata * 0.25;
                 fondo_emergencia += sobrante_de_plata * 0.75;
-                menu_inversion(capital_invertir, sobrante_de_plata, dolares, bitcoin, sp500);
+                ahorros = capital_invertir;
                 break;
 
             case 2:
                 capital_invertir += sobrante_de_plata * 0.50;
                 fondo_emergencia += sobrante_de_plata * 0.50;
-                menu_inversion(capital_invertir, sobrante_de_plata, dolares, bitcoin, sp500);
+                ahorros = capital_invertir;
                 break;
 
             case 3:
                 capital_invertir += sobrante_de_plata * 0.75;
                 fondo_emergencia += sobrante_de_plata * 0.25;
-                menu_inversion(capital_invertir, sobrante_de_plata, dolares, bitcoin, sp500);
+                ahorros = capital_invertir;
                 break;
 
             case 4:
                 capital_invertir += sobrante_de_plata;
-                menu_inversion(capital_invertir, sobrante_de_plata, dolares, bitcoin, sp500);
+                ahorros = capital_invertir;
                 break;
 
             default:
                 cout << "Opcion invalida. Todo el sobrante queda disponible." << endl;
-                break;
+                pausar();
+                return;
         }
+
+        menu_inversion(capital_invertir,dolares,bitcoin,sp500,valor_dolar,valor_bitcoin,valor_sp500);
     }
-    else{
+    else
+    {
         cout << "Este mes tuviste numeros rojos :(" << endl;
     }
 }

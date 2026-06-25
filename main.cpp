@@ -39,7 +39,7 @@ int main() {
                     nuevaPartida(MESES);
                 break;
             case 2:
-                 mostrarHighscore(); // Llama a la funcion del archivo .cpp
+                 mostrarHighscore();
 
                 break;
             case 3:
